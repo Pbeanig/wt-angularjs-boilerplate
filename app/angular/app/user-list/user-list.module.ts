@@ -22,12 +22,9 @@ userListModule.run(($rootScope) => {
 
     let scopeFactory = $rootScope.$new.bind($rootScope);
 
-    $rootScope.$new = () => {
+    let decorateWatch = (watch) => {
 
-        let scope = scopeFactory();
-        let watch = scope.$watch.bind(scope);
-
-        scope.$watch = (watchExpression, listener, ...args) => {
+        return (watchExpression, listener, ...args) => {
 
             let clearWatch = watch(watchExpression, (newValue, oldValue, ...args) => {
 
@@ -49,7 +46,16 @@ userListModule.run(($rootScope) => {
 
             return clearWatch;
 
-        };
+        }
+
+    };
+
+    $rootScope.$new = () => {
+
+        let scope = scopeFactory();
+
+        scope.$watch = decorateWatch(scope.$watch.bind(scope));
+        scope.$watchCollection = decorateWatch(scope.$watchCollection.bind(scope));
 
         return scope;
 

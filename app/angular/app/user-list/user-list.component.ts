@@ -6,6 +6,7 @@
  */
 
 import {User} from '../common/user/user';
+import {Observable} from 'rxjs';
 
 export class UserListComponent {
 
@@ -14,11 +15,14 @@ export class UserListComponent {
         templateUrl: require('./user-list.component.html')
     };
 
-    userList: User[];
+    userList;
+    _userListObserver;
 
     constructor(private userStore) {
         'ngInject';
 
+        this.userList = new Observable((observer) => this._userListObserver = observer).publish();
+        this.userList.connect();
         this._updateUserList();
 
     }
@@ -41,7 +45,7 @@ export class UserListComponent {
 
     private _updateUserList() {
         this.userStore.userList()
-            .then(userList => this.userList = userList);
+            .then(userList => this._userListObserver.next(userList));
     }
 
 }

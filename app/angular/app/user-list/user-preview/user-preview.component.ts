@@ -19,12 +19,15 @@ export class UserPreviewComponent {
 
     constructor() {
 
-        let firstName = '';
-
         this.userObservable = new Observable(observer => {
 
+            observer.next(this.user);
+
             setInterval(() => {
-                observer.next({firstName: firstName += 'x'});
+                this.user = {
+                    firstName: this.user.firstName += 'x'
+                };
+                observer.next(this.user);
             }, 1000);
 
         });

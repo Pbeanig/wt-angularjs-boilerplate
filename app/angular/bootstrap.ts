@@ -1,7 +1,5 @@
 
-import './common'
-
-import 'rxjs/add/operator/pluck';
+import './common';
 
 import * as angular from 'angular';
 import {appModule} from './app/app.module';

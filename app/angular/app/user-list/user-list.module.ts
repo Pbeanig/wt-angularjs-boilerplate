@@ -17,43 +17,42 @@ export const userListModule = angular.module('app.userList', [
 userListModule.component('wtUserForm', UserFormComponent.config);
 userListModule.component('wtUserList', UserListComponent.config);
 userListModule.component('wtUserPreview', UserPreviewComponent.config);
-userListModule.directive('ngAsyncBind', ($compile) => {
-    'ngInject';
 
-    return {
-        compile: (templateElement) => {
+userListModule.run(($rootScope) => {
 
-            $compile.$$addBindingClass(templateElement);
+    let scopeFactory = $rootScope.$new.bind($rootScope);
 
-            return (scope, element, attr) => {
+    $rootScope.$new = () => {
 
-                let clearWatch;
-                let subscription;
+        let scope = scopeFactory();
+        let watch = scope.$watch.bind(scope);
 
-                clearWatch = scope.$watch(attr.ngAsyncBind, (observable) => {
+        scope.$watch = (watchExpression, listener, ...args) => {
 
-                    if (observable === undefined) {
-                        return;
-                    }
+            let clearWatch = watch(watchExpression, (newValue, oldValue, ...args) => {
 
-                    subscription = observable.subscribe((value) => {
-                        element[0].innerText = value ? value.toString() : '';
+                if (listener == null) {
+                    return;
+                }
+
+                if (newValue.subscribe != null) {
+                    newValue.subscribe((value) => {
+                        listener(value, oldValue, ...args);
                     });
-
                     clearWatch();
+                }
+                else {
+                    listener(newValue, oldValue, ...args);
+                }
 
-                });
+            }, ...args);
 
-                scope.$on('$destroy', () => {
+            return clearWatch;
 
-                    if (subscription != null) {
-                        subscription.unsubscribe();
-                    }
+        };
 
-                });
+        return scope;
 
-            };
-        },
-        restrict: 'A'
     };
+
 });

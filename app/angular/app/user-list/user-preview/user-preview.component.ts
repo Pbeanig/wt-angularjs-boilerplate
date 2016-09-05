@@ -1,3 +1,4 @@
+import {Observable} from 'rxjs';
 /**
  *
  * (c) 2013-2016 Wishtack
@@ -17,11 +18,20 @@ export class UserPreviewComponent {
     };
 
     constructor() {
-        setInterval(() => {
-            this.user = {firstName: this.user.firstName + 'x'};
-        }, 1000);
+
+        let firstName = '';
+
+        this.userObservable = new Observable(observer => {
+
+            setInterval(() => {
+                observer.next({firstName: firstName += 'x'});
+            }, 1000);
+
+        });
+
     }
 
     user;
+    userObservable;
 
 }

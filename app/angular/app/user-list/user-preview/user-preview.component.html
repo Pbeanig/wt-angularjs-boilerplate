@@ -1,9 +1,4 @@
 <div>
-    <span ng-async-bind="$ctrl.user.firstName"></span>
-    <span ng-async-bind="$ctrl.user.firstName"></span>
-    <span ng-async-bind="$ctrl.user.firstName"></span>
-    <span ng-async-bind="$ctrl.user.firstName"></span>
-    <span ng-async-bind="$ctrl.user.firstName"></span>
-    <span ng-async-bind="$ctrl.user.firstName"></span>
+    <span ng-async-bind="$ctrl.userObservable.pluck('firstName')"></span>
     <button ng-click="$ctrl.onUserRemove()">REMOVE</button>
 </div>

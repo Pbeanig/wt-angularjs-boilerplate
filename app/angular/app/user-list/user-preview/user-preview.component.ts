@@ -16,6 +16,12 @@ export class UserPreviewComponent {
         templateUrl: require('./user-preview.component.html')
     };
 
+    constructor() {
+        setInterval(() => {
+            this.user = {firstName: this.user.firstName + 'x'};
+        }, 1000);
+    }
+
     user;
 
 }

@@ -6,7 +6,7 @@
     <div
             ng-repeat="user in $ctrl.userList">
         <wt-user-preview
-                wt-user="user"
+                wt-user="::user"
                 wt-on-user-remove="$ctrl.removeUser(user)">
         </wt-user-preview>
     </div>

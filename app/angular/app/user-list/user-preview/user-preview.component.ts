@@ -11,30 +11,14 @@ export class UserPreviewComponent {
     static config = {
         bindings: <any>{
             onUserRemove: '&wtOnUserRemove',
-            user: '<wtUser'
+            userId: '<wtUserId',
+            userStore: '<wtUserStore',
         },
         controller: UserPreviewComponent,
         templateUrl: require('./user-preview.component.html')
     };
 
-    constructor() {
-
-        this.userObservable = new Observable(observer => {
-
-            observer.next(this.user);
-
-            setInterval(() => {
-                this.user = {
-                    firstName: this.user.firstName += 'x'
-                };
-                observer.next(this.user);
-            }, 1000);
-
-        });
-
-    }
-
-    user;
-    userObservable;
+    userId;
+    userStore;
 
 }

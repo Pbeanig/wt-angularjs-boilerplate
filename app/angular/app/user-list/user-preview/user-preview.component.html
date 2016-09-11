@@ -1,4 +1,5 @@
 <div>
-    <span ng-bind="$ctrl.userObservable.pluck('firstName')"></span>
+    <span ng-bind="async:$ctrl.userStore.getUser({userId: $ctrl.userId}).pluck('firstName')"></span>
+    <span ng-bind="async:$ctrl.userStore.getUser({userId: $ctrl.userId}).pluck('lastName')"></span>
     <button ng-click="$ctrl.onUserRemove()">REMOVE</button>
 </div>

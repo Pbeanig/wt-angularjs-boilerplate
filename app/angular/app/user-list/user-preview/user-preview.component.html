@@ -1,4 +1,16 @@
 <div>
-    <span>{{ $ctrl.user.firstName }}</span>
+    <span ng-bind="$ctrl.user.firstName"></span>
+    <span ng-bind="$ctrl.user.lastName"></span>
     <button ng-click="$ctrl.onUserRemove()">REMOVE</button>
+
+    <button ng-click="$ctrl.test = !$ctrl.test; $ctrl.markForCheck()">EDIT</button>
+    <div ng-if="$ctrl.test">
+        <input type="text" ng-change="$ctrl.markForCheck()" ng-model="$ctrl.user.firstName">
+        <input type="text" ng-change="$ctrl.markForCheck()" ng-model="$ctrl.user.firstName">
+    </div>
+
+    <div ng-repeat="test in [1,2,3]">
+        <div ng-bind="test"></div>
+    </div>
+
 </div>

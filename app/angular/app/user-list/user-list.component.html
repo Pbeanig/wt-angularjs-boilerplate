@@ -4,10 +4,12 @@
         wt-on-user-add="$ctrl.addUser(user)"></wt-user-form>
 
     <div
-            ng-repeat="user in $ctrl.userList">
+            ng-repeat="user in $ctrl.userList track by user.id">
+
         <wt-user-preview
+                wt-user-store="::$ctrl.userStore"
                 wt-user="user"
-                wt-on-user-remove="$ctrl.removeUser(user)">
+                wt-on-user-remove="$ctrl.removeUser({userId: user.id})">
         </wt-user-preview>
     </div>
 

@@ -14,12 +14,34 @@ export class UserListComponent {
         templateUrl: require('./user-list.component.html')
     };
 
-    userList: User[];
+    userList;
 
-    constructor(private userStore) {
+    constructor(private userStore, $interval, $timeout) {
         'ngInject';
 
-        this._updateUserList();
+        for(let i = 0; i < 50; ++i) {
+            $timeout(() => {
+                for(let j = 0; j < 20; ++j) {
+
+                    this.userStore.addUser(new User({
+                        firstName: (i * 100 + j).toString(),
+                        lastName: (i * 100 + j).toString(),
+                    }));
+                }
+                this._updateUserList();
+            }, 10 * i);
+        }
+
+        $interval(() => {
+            let index = Math.floor((Math.random() * 3));
+            this.userStore.updateUser({
+                userId: index.toString(),
+                user: new User({
+                    firstName: Math.floor((Math.random() * 3)).toString()
+                })
+            });
+            this._updateUserList();
+        }, 1000);
 
     }
 

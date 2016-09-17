@@ -1,6 +1,9 @@
 {
     "name": "wt-angularjs-boilerplate",
     "version": "0.0.0",
+    "scripts": {
+        "postinstall": "typings install"
+    },
     "dependencies": {
         "angular": "1.5.5",
         "angular-animate": "1.5.5",
